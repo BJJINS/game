@@ -1,4 +1,4 @@
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Float, Text, } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody, CuboidCollider } from "@react-three/rapier";
 import { useMemo, useRef } from "react";
@@ -17,6 +17,20 @@ const wallMaterial = new MeshStandardMaterial({ color: "slategrey" });
 export const BlockStart = (props) => {
     const { position = [0, 0, 0] } = props;
     return <group position={position}>
+        <Float
+            floatIntensity={0.25}
+            rotationIntensity={0.25}
+            font="/bebas-neue-v9-latin-regular.woff"
+            scale={0.5}
+            maxWidth={0.25}
+            lineHeight={0.75}
+            textAlign="right"
+            position={[0.75, 0.65, 0]}
+            rotation-y={- 0.25}
+        >
+            <Text scale={0.5}>Marble Race</Text>
+            <meshBasicMaterial toneMapped={false} />
+        </Float>
         <mesh
             material={floor1Material}
             geometry={boxGeometry}
@@ -132,6 +146,13 @@ export const BlockEnd = (props) => {
         mesh.castShadow = true;
     });
     return <group position={position}>
+        <Text
+            font="./bebas-neue-v9-latin-regular.woff"
+            position={[0, 2.25, 2]}
+        >
+            FINISH
+            <meshBasicMaterial toneMapped={false} />
+        </Text>
         <mesh
             material={floor1Material}
             geometry={boxGeometry}
@@ -144,6 +165,7 @@ export const BlockEnd = (props) => {
         </RigidBody>
     </group>;
 };
+useGLTF.preload('/hamburger.glb');
 
 function Bounds(props) {
     const { length = 1 } = props;
@@ -183,7 +205,8 @@ function Bounds(props) {
 export const Level = (props) => {
     const {
         count = 5,
-        types = [BlockSpinner, BlockAxe, BlockLimbo]
+        types = [BlockSpinner, BlockAxe, BlockLimbo],
+        seed = 0
     } = props;
 
     const blocks = useMemo(() => {
@@ -194,7 +217,7 @@ export const Level = (props) => {
             blocks.push(type);
         }
         return blocks;
-    }, [count, types]);
+    }, [count, types, seed]);
 
     return <>
         <BlockStart position={[0, 0, 0]} />

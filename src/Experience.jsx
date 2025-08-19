@@ -1,15 +1,15 @@
 import Lights from './Lights.jsx';
 import { Level } from './level.jsx';
 import Player from './Player.jsx';
-import { AxesHelper } from 'three';
+import useGame from './stores/useGame.js';
 
 export default function Experience() {
+    const blocksCount = useGame((state) => { return state.blocksCount; });
+    const blocksSeed = useGame(state => state.blocksSeed);
     return <>
-
-        <axesHelper args={[4]} />
-        <Lights />
-
-        <Level />
+        <color args={['#bdedfc']} attach="background" />
+        <Level count={blocksCount} seed={blocksSeed} />
         <Player />
+        <Lights />
     </>;
 }

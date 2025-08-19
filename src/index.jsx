@@ -4,6 +4,8 @@ import { Canvas } from '@react-three/fiber';
 import Experience from './Experience.jsx';
 import { Physics } from '@react-three/rapier';
 import { KeyboardControls } from '@react-three/drei';
+import Interface from './Interface.jsx';
+import { Perf } from 'r3f-perf';
 
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 
@@ -26,9 +28,11 @@ root.render(
                 position: [2.5, 4, 6]
             }}
         >
+            <Perf position="top-left" />
             <Physics >
                 <Experience />
             </Physics>
         </Canvas>
+        <Interface />
     </KeyboardControls>
 );
